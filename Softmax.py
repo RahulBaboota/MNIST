@@ -11,4 +11,10 @@ def main():
 	## Reading in the MNIST Data with one_hot encoding set as True for the labels of the images .
 	MNIST = input_data.read_data_sets(FLAGS.data_dir, one_hot=True)
 
+	## Creating the Model
+
+	## Creating a placeholder tensor for the input images . Herein , 'None' refers to any number and 784 = 28*28 which is basically
+	## the dimensions of each image when it is squished into a coloumn/row vector . 
+	x = tf.placeholder(tf.float32, [None,784])
+
 	
