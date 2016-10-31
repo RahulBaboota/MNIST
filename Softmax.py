@@ -17,4 +17,7 @@ def main():
 	## the dimensions of each image when it is squished into a coloumn/row vector . 
 	x = tf.placeholder(tf.float32, [None,784])
 
-	
+	## Creating the variables 'Weights' and 'Bias' of appropriate dimensions . Since we are eventually going to learn these 
+	## parameters , they are initialised to 0 .
+	W = tf.Variable(tf.zeros([784, 10]))
+  	b = tf.Variable(tf.zeros([10]))
