@@ -1,0 +1,1 @@
+''' Implementation of Softmax Regression on the famous MNIST Dataset by following code mentioned in the Tensorflow Tutorial . '''
