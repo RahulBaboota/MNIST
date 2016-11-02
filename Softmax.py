@@ -21,3 +21,6 @@ def main():
 	## parameters , they are initialised to 0 .
 	W = tf.Variable(tf.zeros([784, 10]))
   	b = tf.Variable(tf.zeros([10]))
+
+  	## We now compute the output of the first Fully-Connected Layer .
+  	y = tf.matmul(x,W) + b
