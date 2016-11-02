@@ -24,3 +24,12 @@ def main():
 
   	## We now compute the output of the first Fully-Connected Layer .
   	y = tf.matmul(x,W) + b
+
+  	## Creating a placeholder matrix to contain the correct class of the digit image .
+  	y_ = tf.placeholder(tf.float32, [None,10])
+
+  	## Here , instead of simply optimising the Softmax Loss Function , we are optimising the Cross-Entropy .
+  	Cross_Entropy = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(y, y_))
+
+  	## We now train our Neural Net to optimise the Cross-Entropy using simple Gradient Descent with a learning rate of 0.5 .
+  	Train_Step = tf.train.GradientDescentOptimizer(0.5).minimize(cross_entropy)
