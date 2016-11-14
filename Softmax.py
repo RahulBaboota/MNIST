@@ -44,3 +44,10 @@ def main():
         batch_xs, batch_ys = mnist.train.next_batch(100)
         sess.run(train_step, feed_dict={x: batch_xs, y_: batch_ys})
 
+
+    ## We will now make predictions based on Trained Model .
+
+    ## Firstly , we will compute which of our predictions are correct . 
+    Correct_Prediction = tf.equal(tf.argmax(y, 1), tf.argmax(y_, 1))
+
+    
