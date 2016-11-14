@@ -9,7 +9,7 @@ from tensorflow.examples.tutorials.mnist import input_data
 def main():
 
     ## Reading in the MNIST Data with one_hot encoding set as True for the labels of the images .
-    MNIST = input_data.read_data_sets(FLAGS.data_dir, one_hot=True)
+    MNIST = input_data.read_data_sets("MNIST_data/", one_hot=True)
 
     ## Creating the Model
 
