@@ -50,4 +50,10 @@ def main():
     ## Firstly , we will compute which of our predictions are correct . 
     Correct_Prediction = tf.equal(tf.argmax(y, 1), tf.argmax(y_, 1))
 
-    
+    ## The above tensor returns a list of Booleans . To compute our prediction accuracy , we convert them into floating point
+    ## numbers using tf.cast .
+    Accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
+
+    ## We now print our prediction accuracy .
+    print(sess.run(accuracy, feed_dict={x: mnist.test.images,y_: mnist.test.labels}))
+
