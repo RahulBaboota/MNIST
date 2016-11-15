@@ -4,12 +4,14 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 import tensorflow as tf
-from tensorflow.examples.tutorials.mnist import input_data
+import input_data
+
+FLAGS = None
 
 def main():
 
     ## Reading in the MNIST Data with one_hot encoding set as True for the labels of the images .
-    MNIST = input_data.read_data_sets("MNIST_data/", one_hot=True)
+    MNIST = input_data.read_data_sets("FLAGS.data_dir", one_hot=True)
 
     ## Creating the Model
 
@@ -41,8 +43,8 @@ def main():
 
     ## We run the training step 1000 times wherein each time the Network gets a random batch of 100 data points . 
     for _ in range(1000):
-        batch_xs, batch_ys = mnist.train.next_batch(100)
-        sess.run(train_step, feed_dict={x: batch_xs, y_: batch_ys})
+        batch_xs, batch_ys = MNIST.train.next_batch(100)
+        Sess.run(Train_Step, feed_dict={x: batch_xs, y_: batch_ys})
 
 
     ## We will now make predictions based on Trained Model .
@@ -52,8 +54,10 @@ def main():
 
     ## The above tensor returns a list of Booleans . To compute our prediction accuracy , we convert them into floating point
     ## numbers using tf.cast .
-    Accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
+    Accuracy = tf.reduce_mean(tf.cast(Correct_Prediction, tf.float32))
 
     ## We now print our prediction accuracy .
-    print(sess.run(accuracy, feed_dict={x: mnist.test.images,y_: mnist.test.labels}))
+    print(Sess.run(Accuracy, feed_dict={x: MNIST.test.images,y_: MNIST.test.labels}))
+
+main()
 
