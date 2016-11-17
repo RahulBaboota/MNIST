@@ -58,6 +58,3 @@ def main():
 
     ## We now print our prediction accuracy .
     print(Sess.run(Accuracy, feed_dict={x: MNIST.test.images,y_: MNIST.test.labels}))
-
-main()
-
