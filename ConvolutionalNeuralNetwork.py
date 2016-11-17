@@ -21,3 +21,8 @@ MNIST = input_data.read_data_sets("FLAGS.data_dir", one_hot=True)
 def Weight_Variable(shape):
     initial = tf.truncated_normal(shape, stddev=0.1)
     return tf.Variable(initial)
+
+## Function for creating Bias Matrix . Here , we are initialising every element of the Bias Matrix to be 0.1 .
+def Bias_Variable(shape):
+  initial = tf.constant(0.1, shape=shape)
+  return tf.Variable(initial)
