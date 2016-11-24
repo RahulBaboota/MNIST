@@ -24,7 +24,7 @@ def main():
     W = tf.Variable(tf.zeros([784, 10]))
     b = tf.Variable(tf.zeros([10]))
 
-    ## We now compute the output of the first Fully-Connected Layer .
+    ## We now compute the output of the Fully-Connected Layer .
     y = tf.matmul(x,W) + b
 
     ## Creating a placeholder matrix to contain the correct class of the digit image .
