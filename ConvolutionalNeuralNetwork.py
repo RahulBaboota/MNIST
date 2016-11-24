@@ -24,5 +24,12 @@ def Weight_Variable(shape):
 
 ## Function for creating Bias Matrix . Here , we are initialising every element of the Bias Matrix to be 0.1 .
 def Bias_Variable(shape):
-  initial = tf.constant(0.1, shape=shape)
-  return tf.Variable(initial)
+    initial = tf.constant(0.1, shape=shape)
+    return tf.Variable(initial)
+
+## After we have initialised the "Weights" and "Biases" , we will now abstract the process of Convolutions by making a seperate
+## function for the same . We will implement a very "Vanilla" version of Convolutional Neural Networks .
+
+## We will use a stride of 1 in each direction and apply zero padding such that the input and output size remain the same .
+def Conv2d(x, W):
+  return tf.nn.conv2d(x, W, strides=[1, 1, 1, 1], padding='SAME')
