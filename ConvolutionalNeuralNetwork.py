@@ -16,7 +16,7 @@ MNIST = input_data.read_data_sets("FLAGS.data_dir", one_hot=True)
 ## The input to this function is the shape of the weight matrix that we want . It is generally recommended to incorporate small
 ## amount of noise while initialising the Weight Matrices to break some symmetry , therefore , we have set the Standard Deviation
 ## to 0.1 . Also , the weights are normally distributed as well as truncated i.e. those values which are greater than 2 standard
-## deviations from the mean are dropped . 
+## deviations from the mean are dropped .
 
 def Weight_Variable(shape):
     initial = tf.truncated_normal(shape, stddev=0.1)
@@ -33,3 +33,7 @@ def Bias_Variable(shape):
 ## We will use a stride of 1 in each direction and apply zero padding such that the input and output size remain the same .
 def Conv2d(x, W):
   return tf.nn.conv2d(x, W, strides=[1, 1, 1, 1], padding='SAME')
+
+## We will use very simple pooling operation wherein we perform "MaxPool" over 2*2 blocks in our obtained feature maps .
+def Max_Pool_2x2(x):
+  return tf.nn.max_pool(x, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding='SAME')
