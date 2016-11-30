@@ -37,3 +37,8 @@ def Conv2d(x, W):
 ## We will use very simple pooling operation wherein we perform "MaxPool" over 2*2 blocks in our obtained feature maps .
 def Max_Pool_2x2(x):
   return tf.nn.max_pool(x, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding='SAME')
+
+## We will now implement our first "Convolutional Layer" . Here , since our images are GreyScale , the number of chanels
+## in the image is 1 . We will apply 32 filters of 5*5 size in the first convolutional layer .
+W_Conv1 = Weight_Variable([5, 5, 1, 32])
+b_Conv1 = Bias_Variable([32])
