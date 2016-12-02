@@ -46,4 +46,11 @@ b_Conv1 = Bias_Variable([32])
 ## Now , we know that every image goes into a neural network as a Coloumn Vector . So we will reshape the input accordingly .
 ## Here , the 1st dimension specifies that we want to flatten our input image . The 2nd and 3rd dimensions specify the
 ## width and height of the image and finally the 4th dimension specifies the number of color chanels in the image .
-x_Image = tf.reshape( x , [-1,28,28,1] )
+x_Image = tf.reshape(x, [-1,28,28,1])
+
+## We now convolve the image with our 32 weight matrices . Each 5*5 patch will produce a feature map . We will then stack these
+## feature maps together as the final output . We will then apply a Relu Layer to this output .
+Conv1 = tf.nn.relu(Conv2d(x_Image, W_conv1) + b_conv1)
+
+## We will then apply the Max Pool Operation on this output .
+Pool1 = Max_Pool_2x2(Conv1)
