@@ -38,7 +38,9 @@ def Conv2d(x, W):
 def Max_Pool_2x2(x):
   return tf.nn.max_pool(x, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding='SAME')
 
-## We will now implement our first "Convolutional Layer" . Here , since our images are GreyScale , the number of chanels
+## -------------------------------------------- First Convolutional Layer --------------------------------------------
+
+## Here , since our images are GreyScale , the number of chanels
 ## in the image is 1 . We will apply 32 filters of 5*5 size in the first convolutional layer .
 W_Conv1 = Weight_Variable([5, 5, 1, 32])
 b_Conv1 = Bias_Variable([32])
@@ -50,7 +52,22 @@ x_Image = tf.reshape(x, [-1,28,28,1])
 
 ## We now convolve the image with our 32 weight matrices . Each 5*5 patch will produce a feature map . We will then stack these
 ## feature maps together as the final output . We will then apply a Relu Layer to this output .
-Conv1 = tf.nn.relu(Conv2d(x_Image, W_conv1) + b_conv1)
+Conv1 = tf.nn.relu(Conv2d(x_Image, W_Conv1) + b_Conv1)
 
 ## We will then apply the Max Pool Operation on this output .
 Pool1 = Max_Pool_2x2(Conv1)
+
+## -------------------------------------------- Second Convolutional Layer --------------------------------------------
+
+## Now , the input to our Second Conv Layer is the ouput from the First One . Therefore , the number of of chanels
+## in this case will be 32 . We will apply 64 filters of 5*5 size in the second convolutional layer .
+W_Conv2 = Weight_Variable([5, 5, 32, 64])
+b_Conv2 = Bias_Variable([64])
+
+## We now convolve the input with our 64 weight matrices . Each 5*5 patch will produce a feature map . We will then stack these
+## feature maps together as the final output . We will then apply a Relu Layer to this output .
+Conv2 = tf.nn.relu(Conv2d(Pool1, W_Conv2) + b_Conv2)
+
+## We will then apply the Max Pool Operation on this output .
+Pool2 = Max_Pool_2x2(Conv2)
+
