@@ -71,3 +71,15 @@ Conv2 = tf.nn.relu(Conv2d(Pool1, W_Conv2) + b_Conv2)
 ## We will then apply the Max Pool Operation on this output .
 Pool2 = Max_Pool_2x2(Conv2)
 
+## -------------------------------------------- Fully Connected Layer --------------------------------------------
+
+## Now , we will apply a Fully Connected Hidden Layer containing 1024 neurons . After applying 2 convolutional layers ,
+## the size of each feature map is 7*7 with 64 maps stacked on to each other .
+W_FC = Weight_Variable([7 * 7 * 64, 1024])
+b_FC = Bias_Variable([1024])
+
+## We also have to resize the incoming input into the Fully Connected Layer .
+Pool2_Squish = tf.reshape(Pool2, [-1, 7*7*64])
+
+## We will then perform Matrix Multiplication of the input and the Weight Matrix and then apply the Relu Activation Function .
+FC = tf.nn.relu(tf.matmul(Pool2_Squish, W_FC) + b_FC)
