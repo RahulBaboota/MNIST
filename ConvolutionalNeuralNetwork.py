@@ -83,3 +83,14 @@ Pool2_Squish = tf.reshape(Pool2, [-1, 7*7*64])
 
 ## We will then perform Matrix Multiplication of the input and the Weight Matrix and then apply the Relu Activation Function .
 FC = tf.nn.relu(tf.matmul(Pool2_Squish, W_FC) + b_FC)
+
+## -------------------------------------------- Dropout Layer --------------------------------------------
+
+## To avoid overfitting , we will apply Dropout in our Convnet . We will apply "Inverted Dropout" instead of regular dropout
+## wherein we will scale our neurons at training time itself so that there is no need to scale them at test time .
+
+## Creating a placeholder to specify what percentage of neurons to drop .
+Dropout_Probability = tf.placeholder(tf.float32)
+
+## Applying Dropout .
+FC_Dropout = tf.nn.dropout(FC, Dropout_Probability)
