@@ -27,6 +27,13 @@ def Bias_Variable(shape):
     initial = tf.constant(0.1, shape=shape)
     return tf.Variable(initial)
 
+## Creating a placeholder tensor for the input images . Herein , 'None' refers to any number and 784 = 28*28 which is basically
+## the dimensions of each image when it is squished into a coloumn/row vector .
+x = tf.placeholder(tf.float32, [None,784])
+
+## Creating a placeholder matrix to contain the correct class of the digit image .
+y_ = tf.placeholder(tf.float32, [None,10])
+
 ## After we have initialised the "Weights" and "Biases" , we will now abstract the process of Convolutions by making a seperate
 ## function for the same . We will implement a very "Vanilla" version of Convolutional Neural Networks .
 
@@ -75,7 +82,7 @@ Pool2 = Max_Pool_2x2(Conv2)
 
 ## Now , we will apply a Fully Connected Hidden Layer containing 1024 neurons . After applying 2 convolutional layers ,
 ## the size of each feature map is 7*7 with 64 maps stacked on to each other .
-W_FC = Weight_Variable([7 * 7 * 64, 1024])
+W_FC = Weight_Variable([7*7*64, 1024])
 b_FC = Bias_Variable([1024])
 
 ## We also have to resize the incoming input into the Fully Connected Layer .
@@ -94,3 +101,48 @@ Dropout_Probability = tf.placeholder(tf.float32)
 
 ## Applying Dropout .
 FC_Dropout = tf.nn.dropout(FC, Dropout_Probability)
+
+## -------------------------------------------- ReadOut Layer --------------------------------------------
+
+## We finally add the readout layer which will give us the final class scores for each image .
+
+## The final layer Weight and Biases Matrix .
+W_FC2 = Weight_Variable([1024, 10])
+B_FC2 = Bias_Variable([10])
+
+Y_Conv = tf.matmul(FC_Dropout, W_FC2) + B_FC2
+
+## -------------------------------------------- Training and Evaluation --------------------------------------------
+
+## The Cost Function we will optimise in this problem is the Cross Entropy Loss .
+Cross_Entropy = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(Y_Conv, y_))
+
+## We will train our ConvNet by updating our parameters by AdamOptimiser instead of using the Vanilla Gradient Descent.
+Train_Step = tf.train.AdamOptimizer(1e-4).minimize(Cross_Entropy)
+
+## We will now make predictions based on Trained Model .
+
+## Firstly , we will compute which of our predictions are correct .
+Correct_Prediction = tf.equal(tf.argmax(Y_Conv, 1), tf.argmax(y_, 1))
+
+## The above tensor returns a list of Booleans . To compute our prediction accuracy , we convert them into floating point
+## numbers using tf.cast .
+Accuracy = tf.reduce_mean(tf.cast(Correct_Prediction, tf.float32))
+
+## Creating and running a Session .
+Sess.run(tf.initialize_all_variables())
+
+for i in range(20000):
+
+    ## Training mini batches of 50 images .
+    Batch = MNIST.train.next_batch(50)
+
+    ## We are printing the progress of the Network after every 100 iterations .
+    if (i%100 == 0):
+        train_accuracy = Accuracy.eval(feed_dict={
+            x:Batch[0], y_: Batch[1], Dropout_Probability: 1.0})
+        print("step %d, training accuracy %g " %(i, train_accuracy))
+        Train_Step.run(feed_dict={x: Batch[0], y_: Batch[1], Dropout_Probability: 0.5})
+
+print("test accuracy %g" %Accuracy.eval(feed_dict={
+    x: MNIST.test.images, y_: MNIST.test.labels, Dropout_Probability: 1.0}))

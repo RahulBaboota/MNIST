@@ -16,10 +16,10 @@ def main():
     ## Creating the Model
 
     ## Creating a placeholder tensor for the input images . Herein , 'None' refers to any number and 784 = 28*28 which is basically
-    ## the dimensions of each image when it is squished into a coloumn/row vector . 
+    ## the dimensions of each image when it is squished into a coloumn/row vector .
     x = tf.placeholder(tf.float32, [None,784])
 
-    ## Creating the variables 'Weights' and 'Bias' of appropriate dimensions . Since we are eventually going to learn these 
+    ## Creating the variables 'Weights' and 'Bias' of appropriate dimensions . Since we are eventually going to learn these
     ## parameters , they are initialised to 0 .
     W = tf.Variable(tf.zeros([784, 10]))
     b = tf.Variable(tf.zeros([10]))
@@ -41,7 +41,7 @@ def main():
 
     tf.initialize_all_variables().run()
 
-    ## We run the training step 1000 times wherein each time the Network gets a random batch of 100 data points . 
+    ## We run the training step 1000 times wherein each time the Network gets a random batch of 100 data points .
     for _ in range(1000):
         batch_xs, batch_ys = MNIST.train.next_batch(100)
         Sess.run(Train_Step, feed_dict={x: batch_xs, y_: batch_ys})
@@ -49,7 +49,7 @@ def main():
 
     ## We will now make predictions based on Trained Model .
 
-    ## Firstly , we will compute which of our predictions are correct . 
+    ## Firstly , we will compute which of our predictions are correct .
     Correct_Prediction = tf.equal(tf.argmax(y, 1), tf.argmax(y_, 1))
 
     ## The above tensor returns a list of Booleans . To compute our prediction accuracy , we convert them into floating point
